@@ -660,15 +660,20 @@ drug_use_html</code></pre>
 ## # ℹ 8 more variables: `12-17(2014-2015)` &lt;chr&gt;, `12-17(P Value)` &lt;chr&gt;,
 ## #   `18-25(2013-2014)` &lt;chr&gt;, `18-25(2014-2015)` &lt;chr&gt;, `18-25(P Value)` &lt;chr&gt;,
 ## #   `26+(2013-2014)` &lt;chr&gt;, `26+(2014-2015)` &lt;chr&gt;, `26+(P Value)` &lt;chr&gt;</code></pre>
+<p>Import NSDUH data</p>
+<pre class="r"><code>nsduh_url = &quot;http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm&quot;
+
+nsduh_html = 
+  read_html(nsduh_url)</code></pre>
 <pre class="r"><code>nyc_cost = 
   read_html(&quot;https://www.bestplaces.net/cost_of_living/city/new_york/new_york&quot;) |&gt;
   html_table(header = TRUE) |&gt;
   first()</code></pre>
-<pre class="r"><code>## marj_use_df =
- ## drug_use_html() |&gt;
- ## html_table() |&gt;
- ## first() |&gt;
-  ##slice(-1)</code></pre>
+<pre class="r"><code>##marj_use_df =
+## drug_use_html() |&gt;
+## html_table() |&gt;
+## first() |&gt;
+## slice(-1)</code></pre>
 </div>
 <div id="import-star-wars--what-are-the-html-elements-we-want" class="section level2">
 <h2>Import Star Wars -what are the html elements we want</h2>
@@ -695,6 +700,26 @@ swm_html =
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>BRFSS DATA</p>
+<pre class="r"><code>brfss_df = 
+  GET(&quot;https://data.cdc.gov/resource/acme-vg9e.csv&quot;,
+      query = list(&quot;$limit&quot; = 5000)) |&gt;
+  content(&quot;parse&quot;)</code></pre>
+<pre><code>## Rows: 5000 Columns: 23
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (16): locationabbr, locationdesc, class, topic, question, response, data...
+## dbl  (6): year, sample_size, data_value, confidence_limit_low, confidence_li...
+## lgl  (1): locationid
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div id="pokeman" class="section level1">
+<h1>Pokeman</h1>
+<pre class="r"><code>poke_df =
+  GET(&quot;https://pokeapi.co/api/v2/pokemon/ditto&quot;) |&gt;
+  content(&quot;parse&quot;)</code></pre>
 </div>
 
 

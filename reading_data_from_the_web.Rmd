@@ -5,9 +5,26 @@ date: "2023-10-12"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+
 library(rvest)
 library(httr)
 
@@ -25,6 +42,15 @@ drug_use_html |>
 
 
 ```
+Import NSDUH data
+
+```{r}
+nsduh_url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+
+nsduh_html = 
+  read_html(nsduh_url)
+```
+
 
 ```{r}
 nyc_cost = 
@@ -34,11 +60,11 @@ nyc_cost =
 ```
 
 ```{r}
-## marj_use_df =
- ## drug_use_html() |>
- ## html_table() |>
- ## first() |>
-  ##slice(-1)
+##marj_use_df =
+## drug_use_html() |>
+## html_table() |>
+## first() |>
+## slice(-1)
 ```
 
 
@@ -67,7 +93,21 @@ get water data from NYC
 nyc_water_df = 
   GET("https://data.cityofnewyork.us/resource/ia2d-e54m.csv") |>
   content("parsed")
+```
 
+BRFSS DATA
 
+```{r}
+brfss_df = 
+  GET("https://data.cdc.gov/resource/acme-vg9e.csv",
+      query = list("$limit" = 5000)) |>
+  content("parse")
+```
+
+# Pokeman 
+```{r}
+poke_df =
+  GET("https://pokeapi.co/api/v2/pokemon/ditto") |>
+  content("parse")
 ```
 
